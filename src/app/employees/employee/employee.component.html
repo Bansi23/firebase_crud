@@ -1,0 +1,154 @@
+<form #employeeForm="ngForm" novalidate (ngSubmit)="onSubmit(employeeForm, employeeForm.valid)">
+
+
+  <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="employeeService.selectedEmployee.$key">
+  <div class="row">
+    <div class="col col-lg-6 col-md-6">
+      <div class="form-group">
+        <label for="fnm">First Name:</label>
+        <input class="form-control " id="fnm" #fname="ngModel" name="fname"
+          [(ngModel)]="employeeService.selectedEmployee.fname" placeholder="Enter Your First name" type="text" required>  
+          <small [hidden]="fname.valid || (fname.pristine && !employeeForm.submitted)" class="text-danger">
+              First Name is required.
+          </small>  
+        </div>
+    </div>
+
+    <div class="col col-lg-6 col-md-6">
+      <div class="form-group">
+        <label for="lnm">Last Name:</label>
+        <input class="form-control" id="lnm" #lname="ngModel" [(ngModel)]="employeeService.selectedEmployee.lname"
+          type="text" aria-invalid="false" required placeholder="Enter Last Name" name="lname">
+          <small [hidden]="lname.valid || (lname.pristine && !employeeForm.submitted)" class="text-danger">
+              Last Name is required.
+          </small> 
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col col-lg-6 col-md-6">
+      <div class="form-group">
+        <label for="bdate">Birth Date:</label>
+        <input class=" form-control datepicker" #bdate="ngModel"
+          [(ngModel)]="employeeService.selectedEmployee.bdate" id="bdate" name="bdate" id="bdate" type="date">
+          <small [hidden]="bdate.valid || (bdate.pristine && !employeeForm.submitted)" class="text-danger">
+             Birth Date is required.
+          </small> 
+      </div>
+    </div>
+
+    <div class="col col-lg-6 col-md-6">
+      <div class="form-group">
+        <label for="mno">Mobile No.:</label>
+        <input class="form-control" id="mno" name="mobileno" pattern="[0-9]{10}" maxlength="10" #mobileno="ngModel"
+          [(ngModel)]="employeeService.selectedEmployee.mobileno" type="text" placeholder="Enter mobile Number" aria-invalid="false">
+          <small [hidden]="mobileno.valid || (mobileno.pristine && !employeeForm.submitted)" class="text-danger">
+              Mobile Number is required(10 digit).
+           </small> 
+        </div>
+        <p>{{num2}}
+        </p> 
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col col-lg-6 col-md-6">
+      <div class="form-group">
+        <label for="mail">Email:</label>
+        <input class="form-control" id="email" required name="email" #email="ngModel"
+          [(ngModel)]="employeeService.selectedEmployee.email" placeholder="Enter your E-mail" type="email" pattern="[a-z A-Z 0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" aria-invalid="false">
+          <small [hidden]="email.valid || (email.pristine && !employeeForm.submitted)" class="text-danger">
+              Email is required(Ex.Baany@gmail.com).
+           </small> 
+        </div>
+    </div>
+
+    <div class="col col-lg-6 col-md-6">
+      <div class="form-group">
+        <label for="address">Address:</label>
+        <textarea class="form-control " required id="address" name="address" #address="ngModel"
+          [(ngModel)]="employeeService.selectedEmployee.address"></textarea>
+          <small [hidden]="address.valid || (address.pristine && !employeeForm.submitted)" class="text-danger">
+             Address is required.
+           </small> 
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col col-lg-6 col-md-6">
+      <div class="form-group">
+        <label for="pass">Password:</label>
+        <input class="form-control " id="pass" name="pass" #pass="ngModel" pattern="^\S{6,}$"
+        [(ngModel)]="employeeService.selectedEmployee.pass" validateEqual="cpass"  passwordToggle type="password"
+          aria-invalid="false" required>
+          <small [hidden]="pass.valid || (pass.pristine && !employeeForm.submitted)" class="text-danger">
+              Password is required
+            </small> 
+      </div>
+    </div>
+
+    <div class="col col-lg-6 col-md-6">
+      <div class="form-group">
+        <label for="cpass">Confirm Password:</label>
+        <input class="form-control" id="cpass" pattern="^\S{6,}$" name="cpass" #cpass="ngModel"  passwordToggle [(ngModel)]="employeeService.selectedEmployee.cpass"
+          type="password" aria-invalid="false"  required>
+          <small [hidden]="cpass.valid || (cpass.pristine && !employeeForm.submitted)" class="text-danger">
+              Confirm Password is required(With match withh Password)
+            </small> 
+      </div>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col col-lg-6 col-md-6">
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <input class="form-control" id="age" name="age" pattern="[0-9]{2}" maxlength="2" #age="ngModel"
+          [(ngModel)]="employeeService.selectedEmployee.age" type="text"  aria-invalid="false" required placeholder="Enter Your Age">
+          <small [hidden]="age.valid || (age.pristine && !employeeForm.submitted)" class="text-danger">
+              Age is required(with only 2 digit)
+            </small> 
+        </div>
+    </div>
+
+    <div class="col col-lg-6 col-md-6 my-4">
+      <div class="form-group">
+        <label for="mno">Gender:</label>
+        <label><input type="radio" name="gender" value="Male" #gender="ngModel"
+            [(ngModel)]="employeeService.selectedEmployee.gender">Male</label>&nbsp;
+        <label><input type="radio" name="gender" value="Female" #gender="ngModel"
+            [(ngModel)]="employeeService.selectedEmployee.gender">Female</label>
+            <small [hidden]="age.gender || (gender.pristine && !employeeForm.submitted)" class="text-danger">
+                Gender is required.
+            </small> 
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col col-lg-6 col-md-6">
+      <div class="form-group">
+        <label for="pinno">Pin No.:</label>
+        <input class="form-control " id="pinno" name="pinno" type="text" #pinno="ngModel"
+          [(ngModel)]="employeeService.selectedEmployee.pinno" placeholder="Enter Pin Number" pattern="[0-9]{6}" maxlength="6" required>
+        </div>
+    </div>
+  </div>
+
+   <ng5-slider [(value)]="value" [options]="options"></ng5-slider>
+ 
+  <div class="row">
+    <div class="col col-lg-6 col-md-12">
+      <button class="btn btn-primary btn-md" type="submit" [disabled]="!employeeForm.valid "><i
+          class="fa fa-floppy-o"></i>&nbsp; Submit</button> &nbsp;&nbsp;&nbsp;
+      <button class="btn btn-warning btn-md" type="reset"><i class="fa fa-refresh" (click)="ResetForm()"></i>&nbsp;
+        Reset</button>
+    </div>
+</div>
+
+</form>
+
+

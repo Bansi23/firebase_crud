@@ -1,0 +1,25 @@
+<h6 class="text-center">List of Employees</h6><br/>
+<div>
+    <input type="text" [(ngModel)]="fnameFilter.fname" placeholder="First Name" class="form-control">
+</div>  
+<table class="table table-sm  table-striped table-bordered my-4">
+  
+  <th>Name</th>
+  <th>Email</th>
+  <th>Contact</th>
+  <th>options</th>
+  <tr *ngFor="let employee of employeeList  | filterBy: fnameFilter">
+    <td>{{employee.fname | titlecase}}</td>
+    <td>{{employee.email | lowercase}}</td>
+    <td>{{employee.mobileno}}</td>
+    <td>
+      <a class="btn btn-default" (click)="onEdit(employee)">
+        <i class="fa fa-pencil-square-o"></i>
+      </a> 
+      <a class="btn btn-default" (click)="onDelete(employee.$key)">
+        <i class="fa fa-trash-o"></i>
+      </a>
+    </td>
+  </tr>
+  <td colspan="4" *ngIf="(employeeList | filterBy: fnameFilter) == 0" class="alert alert-warning">No matching elements</td>
+</table>
