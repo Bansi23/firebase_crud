@@ -14,19 +14,9 @@ export class EmployeeListComponent implements OnInit {
   fnameFilter: any = { fname: '' };
   @Input() public titletochild;
 
-  constructor(private employeeService: EmployeeService, private tostr: ToastrService) { }
-  
-  ngOnInit() {
-    var getuserdata = this.employeeService.getData();
-    getuserdata.snapshotChanges().subscribe(item => {
-      this.employeeList = [];
-      item.forEach(element => {
-        var addrecord = element.payload.toJSON();
-        addrecord["$key"] = element.key;
-        this.employeeList.push(addrecord as Employee)
-      });
-    });
-  }
+
+
+
 
   onEdit(emp: Employee) {
     console.log('emp', emp);
@@ -39,4 +29,16 @@ export class EmployeeListComponent implements OnInit {
       this.tostr.error("Delete successfully", "Employee register")
     }
   }
+  ngOnInit() {
+    var getuserdata = this.employeeService.getData();
+    getuserdata.snapshotChanges().subscribe(item => {
+      this.employeeList = [];
+      item.forEach(element => {
+        var addrecord = element.payload.toJSON();
+        addrecord["$key"] = element.key;
+        this.employeeList.push(addrecord as Employee)
+      });
+    });
+  }
+  constructor(private employeeService: EmployeeService, private tostr: ToastrService) { }
 }

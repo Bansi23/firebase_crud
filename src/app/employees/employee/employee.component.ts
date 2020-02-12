@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EmployeeService } from '../shared/employee.service';
 import { ToastrService } from 'ngx-toastr';
-import {MyDatePickerModule} from 'mydatepicker';import { EmployeeListComponent } from '../employee-list/employee-list.component';
+import { MyDatePickerModule } from 'mydatepicker'; import { EmployeeListComponent } from '../employee-list/employee-list.component';
 import { Options } from 'ng5-slider';
 ;
 
@@ -14,29 +14,34 @@ import { Options } from 'ng5-slider';
 export class EmployeeComponent implements OnInit {
 
   constructor(private employeeService: EmployeeService, private tostr: ToastrService) { }
+  @ViewChild(EmployeeListComponent) private editQue: EmployeeListComponent;
 
   ngOnInit() {
     this.ResetForm();
   }
 
-   value: number = 100;
+  value: number = 100;
   options: Options = {
     floor: 0,
     ceil: 200
   };
-  onSubmit( employeeForm: NgForm, isValid: boolean) {
-     if (employeeForm.value.$key == null)
-     {
+  onSubmit(employeeForm: NgForm, isValid: boolean) {
+    if (employeeForm.value.$key == null) {
+      this.employeeService.insertEmployee(employeeForm.value);
+      this.tostr.success('registration Successfully', 'Employee Registered')
+      this.ResetForm(employeeForm);
+      employeeForm.reset();
+      this.ngOnInit();
+    }
+    else {
+      this.employeeService.updateEmployee(employeeForm.value);
+      this.tostr.success('Update employee Successfully', 'Employee updated')
+      this.ResetForm(employeeForm);
+      employeeForm.reset();
+      this.ngOnInit();
+      const aa = this.editQue.employeeList;
+      console.log('aa', aa);
 
-       this.employeeService.insertEmployee(employeeForm.value);
-       this.tostr.success('registration Successfully', 'Employee Registered')
-       this.ResetForm(employeeForm);
-     }
-     else
-     {
-     this.tostr.success('registration Successfully', 'Employee Registered')
-     this.employeeService.updateEmployee(employeeForm.value);
-     this.ResetForm(employeeForm);
     }
   };
   ResetForm(empemployeeForm?: NgForm) {
@@ -55,8 +60,8 @@ export class EmployeeComponent implements OnInit {
       gender: '',
       age: '',
       pinno: ''
-      }
     }
   }
+}
 
 
